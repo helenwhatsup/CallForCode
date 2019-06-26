@@ -1,19 +1,25 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class Demand implements Comparable<Demand>, Serializable{
 	private int demandId;
 	private String name;
 	private String category;
-	private int amount;
+	private int amountNeeded;
 	private String unit;
 	private int priority; // range from 1 to 3 to represent the urgency.
-
+	private int DemanderId;
+	
 	private static int currentDemandId=1;
 	private static final long serialVersionUID = 20190625050327L;
 	
+	/*
+	 *  The map that matches a category to its corresponding priority.
+	 */
 	private static Map<String, Integer> priorityForCategoryMap = new HashMap<String, Integer>() {{
 		put("Food", 1);
 		put("Medical", 2);
@@ -34,7 +40,7 @@ public class Demand implements Comparable<Demand>, Serializable{
 		this.demandId = ++currentDemandId;
 		this.name = name;
 		this.category = category;
-		this.amount = amount;
+		this.amountNeeded = amount;
 		this.unit = unit;
 		this.priority = priorityForCategoryMap.get(category);
 	}
@@ -52,7 +58,7 @@ public class Demand implements Comparable<Demand>, Serializable{
 		this.demandId = ++currentDemandId;
 		this.name = name;
 		this.category = category;
-		this.amount = amount;
+		this.amountNeeded = amount;
 		this.unit = unit;
 		this.priority = priority;
 	}
@@ -60,16 +66,43 @@ public class Demand implements Comparable<Demand>, Serializable{
 	@Override
 	public int compareTo(Demand other) {
 		if (this.priority < other.priority) {
-			return -1;
-		} else if (this.priority > other.priority) {
 			return 1;
+		} else if (this.priority > other.priority) {
+			return -1;
 		} 
 		return 0;
 	}
 	
-	public matchToSupply() {
+	/*
+	 * 
+	 */
+	public void matchToSupply() {
+		// First match with the unprofitable supply pool
+		List<UnprofitableSupply> supplyList1 = new ArrayList<UnprofitableSupply> ();
+		//TODO: actually use get....
+		// The amount of supply accumulated from the organizations so far.
+		double sum = 0; 
+		
+		Collections.sort(supplyList1);
+		
+		
+		for (UnprofitableSupply s1 : supplyList1) {
+			while (sum < this.amountNeeded) {
+				double amountStillNeeded = this.amountNeeded - sum;
+				if (s1.getAmount() < amountStillNeeded) {
+					sum += s1.getAmount();
+					s1.setAmount(0);
+					//TODO update s1 data
+				} else if (s1.getAmount() >= amountStillNeeded) {
+					sum = amountNeeded;
+					
+				}
+				
+			}
+		}
 		
 	}
+	
 	
 	public int getDemandId() {
 		return demandId;
@@ -88,11 +121,11 @@ public class Demand implements Comparable<Demand>, Serializable{
 	}
 
 	public int getAmount() {
-		return amount;
+		return amountNeeded;
 	}
 
 	public void setAmount(int amount) {
-		this.amount = amount;
+		this.amountNeeded = amount;
 	}
 
 	public String getUnit() {
