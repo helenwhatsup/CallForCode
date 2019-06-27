@@ -18,7 +18,9 @@ public class Supply implements Comparable<Supply>, Cloneable {
 		this.provider = provider;
 	}
 
-	// TODO
+	
+
+	// TODO update supply info on the chain
 	public void updateSupply() {
 
 	}
@@ -26,14 +28,14 @@ public class Supply implements Comparable<Supply>, Cloneable {
 	@Override
 	public int compareTo(Supply other) {
 		if (this.provider.getRank() > other.provider.getRank()) {
-			return 1;
+			return -1; 
 		} else if (this.provider.getRank() < other.provider.getRank()) {
-			return -1;
+			return 1;
 		} else {
 			if (this.getAmount() > other.getAmount()) {
-				return 1;
-			} else if (this.getAmount() < other.getAmount()) {
 				return -1;
+			} else if (this.getAmount() < other.getAmount()) {
+				return 1;
 			}
 			return 0;
 		}
@@ -48,6 +50,12 @@ public class Supply implements Comparable<Supply>, Cloneable {
 			e.printStackTrace();
 		}
 		return s;
+	}
+	
+	@Override
+	public String toString() {
+		return "Supply [supplyId=" + supplyId + ", name=" + name + ", amount=" + amount + 
+				", with provider rank" + provider.getRank() + "]";
 	}
 
 	public int getSupplyId() {

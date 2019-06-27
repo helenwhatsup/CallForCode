@@ -8,6 +8,12 @@ public class ProfitableSupply extends Supply {
 	}
 	
 	
+	@Override
+	public String toString() {
+		return super.toString() + "ProfitableSupply [unitPrice=" + unitPrice + "]";
+	}
+
+
 	public double getUnitPrice() {
 		return unitPrice;
 	}
@@ -18,14 +24,14 @@ public class ProfitableSupply extends Supply {
 	
 	public int compareTo(ProfitableSupply other) {
 		if (this.getProvider().getRank() > other.getProvider().getRank()) {
-			return 1;
-		} else if (this.getProvider().getRank() < other.getProvider().getRank()) {
 			return -1;
+		} else if (this.getProvider().getRank() < other.getProvider().getRank()) {
+			return 1;
 		} else {
 			if ((this.getAmount() / this.getUnitPrice()) > (other.getAmount() / other.getUnitPrice())) {
-				return 1;
-			} else if ((this.getAmount() / this.getUnitPrice()) < (other.getAmount() / other.getUnitPrice())) {
 				return -1;
+			} else if ((this.getAmount() / this.getUnitPrice()) < (other.getAmount() / other.getUnitPrice())) {
+				return +1;
 			}
 		}
 		return 0;
