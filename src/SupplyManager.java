@@ -22,16 +22,21 @@ public class SupplyManager {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param list
+	 * @return 
+	 */
 	public double getTotalAmount(List<Supply> list) {
 		double total = list.stream().mapToDouble(s -> s.getAmount()).sum();
 		return total;
 	}
-
-	public double getTotalPrice(List<ProfitableSupply> list) {
+	
+	public double getTotalPrice(List<Supply> profitableSupplyList) {
 		double totalPrice = 0;
 
-		for (ProfitableSupply s : list) {
-			totalPrice += s.getUnitPrice() * s.getAmount();
+		for (Supply s : profitableSupplyList) {
+			totalPrice += ((ProfitableSupply)s).getUnitPrice() * s.getAmount();
 		}
 		return totalPrice;
 	}
@@ -48,7 +53,7 @@ public class SupplyManager {
 	 * 
 	 * @param amountNeeded
 	 * @param supplyList
-	 * @return the amount of resource collected in the unprofitable supply pool
+	 * @return the list of supplies that's mapped to the demand.
 	 */
 	List<Supply> mapInUnprofitableSupplyPool(String resourceName, double amountNeeded) {
 		double sum = 0;
@@ -68,7 +73,7 @@ public class SupplyManager {
 
 				sum += s.getAmount();
 				// s.setAmount(0);
-				// TODO update s1 data
+				s.updateSupply();// TODO update s1 data
 			} else if (s.getAmount() >= amountStillNeeded) {
 				UnprofitableSupply s1 = (UnprofitableSupply) s.clone();
 				supplyList.add(s1);
@@ -83,10 +88,12 @@ public class SupplyManager {
 	}
 
 	/**
+	 * Calculate the price needed to pay for the most optimal amount of resources in the 
+	 * profitable supply pool.
 	 * 
 	 * @param resourceName
 	 * @param amountNeeded
-	 * @return
+	 * @return the price for supplies in the profitable supply pool.
 	 */
 	double calculatePriceInProfitableSupplyPool(String resourceName, double amountNeeded) {
 		// the array containing the amount of resources collected so far and the price
@@ -116,11 +123,12 @@ public class SupplyManager {
 	}
 
 	/**
+	 * Map in the profitable supply pool with the given amount of fund.
 	 * 
 	 * @param resourceName
 	 * @param amountNeeded
 	 * @param fund
-	 * @return
+	 * @return the list of supplies that's mapped to the demand.
 	 */
 	List<Supply> mapInProfitableSupplyPool(String resourceName, double amountNeeded, double fund) {
 		double price = 0, sum = 0;

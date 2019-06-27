@@ -70,37 +70,43 @@ public class Demand implements Comparable<Demand>, Serializable {
 	 */
 	public void matchToSupply() {
 		SupplyManager supplyManager = new SupplyManager();
-		
+
 		// First match with the unprofitable supply pool
-		List<Supply> supplyList = supplyManager.mapInUnprofitableSupplyPool(this.getName(), this.amountNeeded);
-		
-		
-		double amountStillNeeded = this.amountNeeded - supplyManager.getTotalAmount(supplyList);
+		List<Supply> unprofitableSupplyList = supplyManager.mapInUnprofitableSupplyPool(this.getName(),
+				this.amountNeeded);
+		double sum = supplyManager.getTotalAmount(unprofitableSupplyList);
+
+		double amountStillNeeded = this.amountNeeded - sum;
 		if (amountStillNeeded == 0) {
 			return;
 		}
 
-		 /*
-		  *   Calculate the price needed to pay for the available resources 
-		  *   in the profitable supply pool.
-		  */
+		// Calculate the price needed to pay for the available resources
+		// in the profitable supply pool.
 		double price = supplyManager.calculatePriceInProfitableSupplyPool(this.getName(), amountStillNeeded);
-		double fund = price < supplyManager.getTotalFund() ? price : supplyManager.getTotalFund();
 		
 		// Map in the profitable supply pool with the fund.
-//		supplyManager.mapInProfitableSupplyPool(this.getName(), amountStillNeeded, fund);
-//		sum += amountPricePair[0];
-//		double fundUsed = amountPricePair[1];
-//
-//		// Deduct the fund actually used in the unprofitable supply pool.
-//		if (fundUsed != supplyManager.mapInUnprofitableSupplyPool("Fund", fundUsed)) {
-//			throw new RuntimeException();
-//		}
-		// TODO broadcast transaction to the chain. SUM & FUND USED
+		double fund = price < supplyManager.getTotalFund() ? price : supplyManager.getTotalFund();
+		List<Supply> profitableSupplyList = supplyManager.mapInProfitableSupplyPool(
+				this.getName(), amountStillNeeded, fund);
+		sum += supplyManager.getTotalAmount(profitableSupplyList);
+		double fundUsed = supplyManager.getTotalPrice(profitableSupplyList);
 
+		// Deduct the fund actually used in the unprofitable supply pool.
+		List<Supply> fundList = supplyManager.mapInUnprofitableSupplyPool("Fund", fundUsed);
+		if (fundUsed != supplyManager.getTotalAmount(fundList)) {
+			throw new RuntimeException();
+		}
+		// TODO broadcast transaction to the chain. three lists & SUM & FUND USED
+		List<Supply> totalList = new ArrayList<Supply>();
+		totalList.addAll(unprofitableSupplyList);
+		totalList.addAll(profitableSupplyList);
+		totalList.addAll(fundList);
+		
+		if (sum < this.amountNeeded) {
+			// TODO put this unmapped demand in the demand pool
+		}
 	}
-
-	
 
 	@Override
 	public int compareTo(Demand other) {

@@ -1,13 +1,14 @@
 
-public class Supply implements Comparable<Supply>, Cloneable{
+public class Supply implements Comparable<Supply>, Cloneable {
 	private int supplyId;
 	private String name;
 	private double amount;
 	private String unit;
 	private Organization provider;
-	
-	public Supply() {};
-	
+
+	public Supply() {
+	};
+
 	public Supply(int supplyId, String name, int amount, String unit, Organization provider) {
 		super();
 		this.supplyId = supplyId;
@@ -16,15 +17,11 @@ public class Supply implements Comparable<Supply>, Cloneable{
 		this.unit = unit;
 		this.provider = provider;
 	}
-	
+
+	// TODO
 	public void updateSupply() {
-		
-	}
 
-	public int getSupplyId() {
-		return supplyId;
 	}
-
 
 	@Override
 	public int compareTo(Supply other) {
@@ -41,18 +38,21 @@ public class Supply implements Comparable<Supply>, Cloneable{
 			return 0;
 		}
 	}
-	
-	@Override  
-    public Object clone() {  
-        Supply s = null;  
-        try{  
-            s = (Supply) super.clone();  
-        }catch(CloneNotSupportedException e) {  
-            e.printStackTrace();  
-        }  
-        return s;  
-    }  
 
+	@Override
+	public Object clone() {
+		Supply s = null;
+		try {
+			s = (Supply) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return s;
+	}
+
+	public int getSupplyId() {
+		return supplyId;
+	}
 
 	public String getName() {
 		return name;
@@ -69,7 +69,7 @@ public class Supply implements Comparable<Supply>, Cloneable{
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	
+
 	public void deductAmount(double amountToDeduct) {
 		this.amount -= amountToDeduct;
 	}
