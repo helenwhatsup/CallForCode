@@ -5,6 +5,7 @@ public class UnprofitableSupply extends Supply {
 		super(supplyId, name, amount, unit, provider);
 	}
 
+
 //	public int compareTo(Supply other) {
 //		if (this.getProvider().getRank() > other.getProvider().getRank()) {
 //			return 1;

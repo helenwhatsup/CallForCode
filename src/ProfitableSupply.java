@@ -7,19 +7,28 @@ public class ProfitableSupply extends Supply {
 		this.unitPrice = unitPrice;
 	}
 	
-//	public int compareTo(Supply other) {
-//		if (this.provider.getRank() > other.provider.getRank()) {
-//			return 1;
-//		} else if (this.provider.getRank() < other.provider.getRank()) {
-//			return -1;
-//		} else {
-//			if (this.getAmount() > other.getAmount()) {
-//				return 1;
-//			} else if (this.getAmount() < other.getAmount()) {
-//				return -1;
-//			}
-//			return 0;
-//		}
-//	}
+	
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	
+	public int compareTo(ProfitableSupply other) {
+		if (this.getProvider().getRank() > other.getProvider().getRank()) {
+			return 1;
+		} else if (this.getProvider().getRank() < other.getProvider().getRank()) {
+			return -1;
+		} else {
+			if ((this.getAmount() / this.getUnitPrice()) > (other.getAmount() / other.getUnitPrice())) {
+				return 1;
+			} else if ((this.getAmount() / this.getUnitPrice()) < (other.getAmount() / other.getUnitPrice())) {
+				return -1;
+			}
+		}
+		return 0;
+	}
 
 }

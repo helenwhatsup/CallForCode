@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Demand implements Comparable<Demand>, Serializable{
+public class Demand implements Comparable<Demand>, Serializable {
 	private int demandId;
 	private String name;
 	private String category;
@@ -13,21 +13,23 @@ public class Demand implements Comparable<Demand>, Serializable{
 	private String unit;
 	private int priority; // range from 1 to 3 to represent the urgency.
 	private int DemanderId;
-	
-	private static int currentDemandId=1;
+
+	private static int currentDemandId = 1;
 	private static final long serialVersionUID = 20190625050327L;
-	
+
 	/*
-	 *  The map that matches a category to its corresponding priority.
+	 * The map that matches a category to its corresponding priority.
 	 */
-	private static Map<String, Integer> priorityForCategoryMap = new HashMap<String, Integer>() {{
-		put("Food", 1);
-		put("Medical", 2);
-		put("Rescue", 3);
-		put("Epidemic Prevention", 4);
-		put("Construction", 6);
-	}};
-	
+	private static Map<String, Integer> priorityForCategoryMap = new HashMap<String, Integer>() {
+		{
+			put("Food", 1);
+			put("Medical", 2);
+			put("Rescue", 3);
+			put("Epidemic Prevention", 4);
+			put("Construction", 6);
+		}
+	};
+
 	/**
 	 * The constructor with the default priority.
 	 * 
@@ -44,7 +46,7 @@ public class Demand implements Comparable<Demand>, Serializable{
 		this.unit = unit;
 		this.priority = priorityForCategoryMap.get(category);
 	}
-	
+
 	/**
 	 * The constructor with user defined priority.
 	 * 
@@ -62,48 +64,55 @@ public class Demand implements Comparable<Demand>, Serializable{
 		this.unit = unit;
 		this.priority = priority;
 	}
+
+	/*
+	 * Match this demand in the supply pools.
+	 */
+	public void matchToSupply() {
+		SupplyManager supplyManager = new SupplyManager();
+		
+		// First match with the unprofitable supply pool
+		List<Supply> supplyList = supplyManager.mapInUnprofitableSupplyPool(this.getName(), this.amountNeeded);
+		
+		
+		double amountStillNeeded = this.amountNeeded - supplyManager.getTotalAmount(supplyList);
+		if (amountStillNeeded == 0) {
+			return;
+		}
+
+		 /*
+		  *   Calculate the price needed to pay for the available resources 
+		  *   in the profitable supply pool.
+		  */
+		double price = supplyManager.calculatePriceInProfitableSupplyPool(this.getName(), amountStillNeeded);
+		double fund = price < supplyManager.getTotalFund() ? price : supplyManager.getTotalFund();
+		
+		// Map in the profitable supply pool with the fund.
+//		supplyManager.mapInProfitableSupplyPool(this.getName(), amountStillNeeded, fund);
+//		sum += amountPricePair[0];
+//		double fundUsed = amountPricePair[1];
+//
+//		// Deduct the fund actually used in the unprofitable supply pool.
+//		if (fundUsed != supplyManager.mapInUnprofitableSupplyPool("Fund", fundUsed)) {
+//			throw new RuntimeException();
+//		}
+		// TODO broadcast transaction to the chain. SUM & FUND USED
+
+	}
+
 	
+
 	@Override
 	public int compareTo(Demand other) {
 		if (this.priority < other.priority) {
 			return 1;
 		} else if (this.priority > other.priority) {
 			return -1;
-		} 
+		}
 		return 0;
 	}
-	
-	/*
-	 * 
-	 */
-	public void matchToSupply() {
-		// First match with the unprofitable supply pool
-		List<UnprofitableSupply> supplyList1 = new ArrayList<UnprofitableSupply> ();
-		//TODO: actually use get....
-		// The amount of supply accumulated from the organizations so far.
-		double sum = 0; 
-		
-		Collections.sort(supplyList1);
-		
-		
-		for (UnprofitableSupply s1 : supplyList1) {
-			while (sum < this.amountNeeded) {
-				double amountStillNeeded = this.amountNeeded - sum;
-				if (s1.getAmount() < amountStillNeeded) {
-					sum += s1.getAmount();
-					s1.setAmount(0);
-					//TODO update s1 data
-				} else if (s1.getAmount() >= amountStillNeeded) {
-					sum = amountNeeded;
-					
-				}
-				
-			}
-		}
-		
-	}
-	
-	
+
+	// The getters and setters
 	public int getDemandId() {
 		return demandId;
 	}

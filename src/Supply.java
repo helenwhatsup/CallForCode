@@ -1,10 +1,12 @@
 
-public class Supply implements Comparable<Supply>{
+public class Supply implements Comparable<Supply>, Cloneable{
 	private int supplyId;
 	private String name;
 	private double amount;
 	private String unit;
 	private Organization provider;
+	
+	public Supply() {};
 	
 	public Supply(int supplyId, String name, int amount, String unit, Organization provider) {
 		super();
@@ -14,6 +16,15 @@ public class Supply implements Comparable<Supply>{
 		this.unit = unit;
 		this.provider = provider;
 	}
+	
+	public void updateSupply() {
+		
+	}
+
+	public int getSupplyId() {
+		return supplyId;
+	}
+
 
 	@Override
 	public int compareTo(Supply other) {
@@ -30,6 +41,18 @@ public class Supply implements Comparable<Supply>{
 			return 0;
 		}
 	}
+	
+	@Override  
+    public Object clone() {  
+        Supply s = null;  
+        try{  
+            s = (Supply) super.clone();  
+        }catch(CloneNotSupportedException e) {  
+            e.printStackTrace();  
+        }  
+        return s;  
+    }  
+
 
 	public String getName() {
 		return name;
@@ -45,6 +68,10 @@ public class Supply implements Comparable<Supply>{
 
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+	
+	public void deductAmount(double amountToDeduct) {
+		this.amount -= amountToDeduct;
 	}
 
 	public String getUnit() {
