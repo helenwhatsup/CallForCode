@@ -9,7 +9,7 @@ public class Supply implements Comparable<Supply>, Cloneable {
 	public Supply() {
 	};
 
-	public Supply(int supplyId, String name, int amount, String unit, Organization provider) {
+	public Supply(int supplyId, String name, double amount, String unit, Organization provider) {
 		super();
 		this.supplyId = supplyId;
 		this.name = name;
@@ -20,12 +20,12 @@ public class Supply implements Comparable<Supply>, Cloneable {
 
 	
 
-	// TODO update supply info on the chain
+	// TODO Implement the update supply method
 	public void updateSupply() {
 
 	}
 
-	@Override
+
 	public int compareTo(Supply other) {
 		if (this.provider.getRank() > other.provider.getRank()) {
 			return -1; 

@@ -1,5 +1,6 @@
 
-public class ProfitableSupply extends Supply {
+public class ProfitableSupply extends Supply{
+	private int amount; // There is no fund in the profitable supply pool, so the amount should be an integer.
 	private double unitPrice;
 
 	public ProfitableSupply(int supplyId, String name, int amount, String unit, int unitPrice, Organization provider) {
@@ -7,10 +8,31 @@ public class ProfitableSupply extends Supply {
 		this.unitPrice = unitPrice;
 	}
 	
+	@Override
+	public int compareTo(Supply other) {
+		if (this.getProvider().getRank() > other.getProvider().getRank()) { 
+			return -1;
+		} else if (this.getProvider().getRank() < other.getProvider().getRank()) {
+			return 1;
+		} else { 
+			if (this.getUnitPrice() < ((ProfitableSupply) other).getUnitPrice()) {
+				return -1;
+			} else if (this.getUnitPrice() > ((ProfitableSupply) other).getUnitPrice()) {
+				return 1;
+		}else { 
+				if (this.getAmount() > other.getAmount()) {
+					return -1;
+				} else if (this.getAmount() < other.getAmount()) {
+					return +1;
+				}
+			}
+		}
+		return 0;
+	}
 	
 	@Override
 	public String toString() {
-		return super.toString() + "ProfitableSupply [unitPrice=" + unitPrice + "]";
+		return "ProfitableSupply with unitPrice=" + unitPrice + super.toString();
 	}
 
 
@@ -22,19 +44,20 @@ public class ProfitableSupply extends Supply {
 		this.unitPrice = unitPrice;
 	}
 	
-	public int compareTo(ProfitableSupply other) {
-		if (this.getProvider().getRank() > other.getProvider().getRank()) {
-			return -1;
-		} else if (this.getProvider().getRank() < other.getProvider().getRank()) {
-			return 1;
-		} else {
-			if ((this.getAmount() / this.getUnitPrice()) > (other.getAmount() / other.getUnitPrice())) {
-				return -1;
-			} else if ((this.getAmount() / this.getUnitPrice()) < (other.getAmount() / other.getUnitPrice())) {
-				return +1;
-			}
-		}
-		return 0;
-	}
-
+//	public int compareTo(ProfitableSupply other) {
+//		if (this.getProvider().getRank() > other.getProvider().getRank()) {
+//			return -1;
+//		} else if (this.getProvider().getRank() < other.getProvider().getRank()) {
+//			return 1;
+//		} else {
+//			if ((this.getAmount() / this.getUnitPrice()) > (other.getAmount() / other.getUnitPrice())) {
+//				return -1;
+//			} else if ((this.getAmount() / this.getUnitPrice()) < (other.getAmount() / other.getUnitPrice())) {
+//				return +1;
+//			}
+//		}
+//		return 0;
+//	}
+	
+	
 }

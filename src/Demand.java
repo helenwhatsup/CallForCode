@@ -83,12 +83,12 @@ public class Demand implements Comparable<Demand>, Serializable {
 
 		// Calculate the price needed to pay for the available resources
 		// in the profitable supply pool.
-		double price = supplyManager.calculatePriceInProfitableSupplyPool(this.getName(), amountStillNeeded);
+		double price = supplyManager.calculatePriceInProfitableSupplyPool(this.getName(), (int) amountStillNeeded);
 		
 		// Map in the profitable supply pool with the fund.
 		double fund = price < supplyManager.getTotalFund() ? price : supplyManager.getTotalFund();
 		List<Supply> profitableSupplyList = supplyManager.mapInProfitableSupplyPool(
-				this.getName(), amountStillNeeded, fund);
+				this.getName(), (int) amountStillNeeded, fund);
 		sum += supplyManager.getTotalAmount(profitableSupplyList);
 		double fundUsed = supplyManager.getTotalPrice(profitableSupplyList);
 

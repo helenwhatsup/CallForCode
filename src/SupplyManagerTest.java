@@ -44,11 +44,11 @@ public class SupplyManagerTest {
 //		List<Supply> resultList1 = supplyManager.mapInUnprofitableSupplyPool("Water", 300, Arrays.asList(s3, s2, s1));
 //		System.out.println(resultList1);
 		
-		//test unprofitable
-		List<UnprofitableSupply> l1 = Arrays.asList(s3, s2, s1, s5, s4, s6);
-		List<Supply> resultList2 = supplyManager.mapInUnprofitableSupplyPool("Water", 2000, l1);
-		System.out.println(resultList2);
-		System.out.println("\n");
+//		//test unprofitable
+//		List<UnprofitableSupply> l1 = Arrays.asList(s3, s2, s1, s5, s4, s6);
+//		List<Supply> resultList2 = supplyManager.mapInUnprofitableSupplyPool("Water", 2000, l1);
+//		System.out.println(resultList2);
+//		System.out.println("\n");
 		
 		List<ProfitableSupply> l2 = Arrays.asList(ss3, ss2, ss1, ss5, ss4, ss6);
 		double price = supplyManager.calculatePriceInProfitableSupplyPool("Water", 2000, l2);
@@ -57,6 +57,9 @@ public class SupplyManagerTest {
 		
 		List<Supply> resultList3 = supplyManager.mapInProfitableSupplyPool("Water", 2000, 18000, l2);
 		System.out.println(resultList3);
+		
+//		List<Supply> resultList4 = supplyManager.mapInProfitableSupplyPool("Water", 2000, 100, l2);
+//		System.out.println(resultList4);
 		
 		
 	}
@@ -119,23 +122,19 @@ public class SupplyManagerTest {
 				break;
 			}
 			double amountStillNeeded = amountNeeded - sum;
-			if (s.getAmount() < amountStillNeeded) {
-				UnprofitableSupply s1 = (UnprofitableSupply) s.clone();
-				supplyList.add(s1);
-
-				sum += s.getAmount();
-				s.setAmount(0);
-				s.updateSupply();// TODO update s1 data
-			} else if (s.getAmount() >= amountStillNeeded) {
-				UnprofitableSupply s1 = (UnprofitableSupply) s.clone();
-				supplyList.add(s1);
-
-				s1.setAmount(amountStillNeeded);
-				sum = amountNeeded;
-				s.deductAmount(amountStillNeeded);
-				// TODO update s1 data
-			}
+			double amountUsed = s.getAmount() > amountStillNeeded ? amountStillNeeded : s.getAmount();
+			
+			// Add supply to be used to the supply list
+			UnprofitableSupply sCopy = (UnprofitableSupply) s.clone();
+			supplyList.add(sCopy);
+			
+			// Update info
+			sum += amountUsed;
+			s.deductAmount(amountUsed);
+			//TODO update supply data after deducting certain amount
+			s.updateSupply();
 		}
+		
 		return supplyList;
 	}
 
@@ -147,8 +146,9 @@ public class SupplyManagerTest {
 	 * @param amountNeeded
 	 * @return the price for supplies in the profitable supply pool.
 	 */
-	double calculatePriceInProfitableSupplyPool(String resourceName, double amountNeeded, List<ProfitableSupply> profitableSupplyPool) {
-		double price = 0, sum = 0;
+	double calculatePriceInProfitableSupplyPool(String resourceName, int amountNeeded, List<ProfitableSupply> profitableSupplyPool) {
+		double price = 0;
+		int sum = 0;
 
 		//List<ProfitableSupply> profitableSupplyPool = getProfitableSupplyList(resourceName);
 		Collections.sort(profitableSupplyPool);
@@ -158,14 +158,11 @@ public class SupplyManagerTest {
 				break;
 			}
 
-			double amountStillNeeded = amountNeeded - sum;
-			if (s.getAmount() < amountStillNeeded) {
-				sum += s.getAmount();
-				price += s.getUnitPrice() * s.getAmount();
-			} else if (s.getAmount() >= amountStillNeeded) {
-				sum = amountNeeded;
-				price += s.getUnitPrice() * amountStillNeeded;
-			}
+			int amountStillNeeded = amountNeeded - sum;		
+			int amountUsed = (int) (s.getAmount() > amountStillNeeded ? amountStillNeeded : s.getAmount());
+			
+			sum += amountUsed;
+			price += amountUsed * s.getUnitPrice();
 		}
 
 		return price;
@@ -179,35 +176,39 @@ public class SupplyManagerTest {
 	 * @param fund
 	 * @return the list of supplies that's mapped to the demand.
 	 */
-	List<Supply> mapInProfitableSupplyPool(String resourceName, double amountNeeded, double fund, List<ProfitableSupply> profitableSupplyPool) {
-		double price = 0, sum = 0;
+	List<Supply> mapInProfitableSupplyPool(String resourceName, int amountNeeded, double fund, List<ProfitableSupply> profitableSupplyPool) {
+		double fundLeft=fund;
+		int sum = 0;
 		List<Supply> supplyList = new ArrayList<Supply>();
 
 		// List<ProfitableSupply> profitableSupplyPool = getProfitableSupplyList(resourceName);
 		Collections.sort(profitableSupplyPool);
 
 		for (ProfitableSupply s : profitableSupplyPool) {
-			double amountStillNeeded = amountNeeded - sum;
-			if (s.getAmount() < amountStillNeeded && price + s.getUnitPrice() * s.getAmount() <= fund) {
-				ProfitableSupply s1 = (ProfitableSupply) s.clone();
-				supplyList.add(s1);
-
-				sum += s.getAmount();
-				s.setAmount(0);
-				price += s.getUnitPrice() * s.getAmount();
-				// TODO update s data
-			} else if (s.getAmount() >= amountStillNeeded && price + s.getUnitPrice() * amountStillNeeded <= fund) {
-				ProfitableSupply s1 = (ProfitableSupply) s.clone();
-				s1.setAmount(amountStillNeeded);
-				supplyList.add(s1);
-
-				sum = amountNeeded;
-				s.deductAmount(amountStillNeeded);
-				price += s.getUnitPrice() * amountStillNeeded;
-				// TODO update s data
+			int amountStillNeeded = amountNeeded - sum;
+			
+			// The amount of supply affordable with the fund.
+			int amountAffordable = (int) (fundLeft / s.getUnitPrice());
+			if (amountAffordable == 0) { // Since supplies with low unit prices rank ahead.
+				break; 
 			}
+			// The actual amount of supply provided considering both fund and amount.
+			int amountProvided = (int) (amountAffordable > s.getAmount() ? s.getAmount() : amountAffordable);
+			
+			int amountUsed = amountProvided > amountStillNeeded ? amountStillNeeded : amountProvided;
+			
+			// Add supply to be used to the supply list
+			ProfitableSupply sCopy = (ProfitableSupply) s.clone();
+			sCopy.setAmount(amountUsed);
+			supplyList.add(sCopy);
+			
+			// Update info
+			sum += amountUsed;
+			fundLeft -= amountUsed * s.getUnitPrice();
+			s.deductAmount(amountUsed);
+			s.updateSupply();
 		}
-
+		
 		return supplyList;
 	}
 	
