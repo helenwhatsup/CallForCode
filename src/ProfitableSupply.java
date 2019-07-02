@@ -3,7 +3,7 @@ public class ProfitableSupply extends Supply{
 	private int amount; // There is no fund in the profitable supply pool, so the amount should be an integer.
 	private double unitPrice;
 
-	public ProfitableSupply(int supplyId, String name, int amount, String unit, int unitPrice, Organization provider) {
+	public ProfitableSupply(int supplyId, String name, int amount, String unit, double unitPrice, Organization provider) {
 		super(supplyId, name, amount, unit, provider);
 		this.unitPrice = unitPrice;
 	}
@@ -31,8 +31,10 @@ public class ProfitableSupply extends Supply{
 	}
 	
 	@Override
-	public String toString() {
-		return "ProfitableSupply with unitPrice=" + unitPrice + super.toString();
+	public String toString() {		
+		return "ProfitableSupply [supplyId=" + this.getSupplyId() + ", name=" + 
+				this.getName() + ", amount=" + this.getAmount() + ", unitPrice=" + this.getUnitPrice() +
+				" with provider rank" + this.getProvider().getRank() + "]     ";
 	}
 
 
