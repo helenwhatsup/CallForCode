@@ -30,14 +30,34 @@ public class Demand implements Comparable<Demand>, Serializable {
 		int priority = 1;
 		Demand d1 = new Demand(demandId, name, category, amountNeeded, unit, priority);
 		
+		
+		
 		//supply attributes
-		int supplyId = 301;
+		int supplyId2 = 301;
 		String name2 = "milk";
 		double amount2 =  30;
 		String unit2 = "box";
-		int providerId = 401;
-		UnprofitableSupply s1 = new UnprofitableSupply(supplyId, name2, amount2, unit2, providerId);
-		s1.uplinkUnprofitableSupply(supplyId, name2, amount2, unit2, providerId);
+		int providerId2 = 401;
+		UnprofitableSupply s2 = new UnprofitableSupply(supplyId2, name2, amount2, unit2, providerId2);
+		
+		int supplyId3 = 302;
+		String name3 = "milk";
+		double amount3 =  10;
+		String unit3 = "box";
+		int providerId3 = 402;
+		UnprofitableSupply s3 = new UnprofitableSupply(supplyId3, name2, amount2, unit2, providerId3);
+		
+		
+		s2.uplinkUnprofitableSupply();
+		s3.uplinkUnprofitableSupply();
+		
+		s2.deductAmount(20);
+		s2.updateUnprofitableSupply();
+		
+		
+		s3.deductAmount(10);
+		s3.updateUnprofitableSupply();
+		// query s2 to check amount
 		
 		d1.matchToSupply();
 	}
