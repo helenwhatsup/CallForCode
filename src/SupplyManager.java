@@ -30,6 +30,7 @@ public class SupplyManager {
 		double amount = 0;
 		String unit = null;
 		int providerId = 0;
+		int providerRank = 0;
 		try {
 			jsonStr = queryHelper.query(chainCode, "queryUnproByName", args);
 			JSONArray jsonArr = JSONObject.parseArray(jsonStr);
@@ -41,7 +42,8 @@ public class SupplyManager {
 				amount = jsonObj.getDoubleValue("amount");
 				unit = jsonObj.getString("unit");
 				providerId = jsonObj.getIntValue("organization");
-				resultList.add(new UnprofitableSupply(supplyId,name,amount,unit,providerId));
+				providerRank = Organization.getRankById(providerId);
+				resultList.add(new UnprofitableSupply(supplyId,name,amount,unit,providerId,providerRank));
 			}
 			
 		} catch (Exception e) {

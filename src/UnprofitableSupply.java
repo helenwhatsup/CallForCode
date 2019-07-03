@@ -6,7 +6,7 @@ public class UnprofitableSupply extends Supply {
 	private final static String chainCode = "go_package8";
 
 	
-	public UnprofitableSupply(int supplyId, String name, double amount, String unit, int providerID) {
+	public UnprofitableSupply(int supplyId, String name, double amount, String unit, int providerID, int providerRank) {
 		super(supplyId, name, amount, unit, providerID);
 	}
 
