@@ -69,8 +69,7 @@ public class InvokeTest {
 		 channel.addPeer(peer);
 		 //channel.addEventHub(eventHub);
 		 channel.addOrderer(orderer);
-		 channel.setTransactionWaitTime(100000);
-		 channel.setDeployWaitTime(100000);
+
 		 channel.initialize();
 		 
 		 

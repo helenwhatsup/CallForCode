@@ -3,6 +3,7 @@ package main.java.org.example.cfc;
 import java.io.File;
 import java.util.Collection;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 import org.hyperledger.fabric.sdk.ChaincodeID;
 import org.hyperledger.fabric.sdk.Channel;
@@ -12,6 +13,7 @@ import org.hyperledger.fabric.sdk.Orderer;
 import org.hyperledger.fabric.sdk.Peer;
 import org.hyperledger.fabric.sdk.ProposalResponse;
 import org.hyperledger.fabric.sdk.TransactionProposalRequest;
+import org.hyperledger.fabric.sdk.BlockEvent.TransactionEvent;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
 
 import main.java.org.example.user.UserContext;
@@ -84,14 +86,42 @@ public class InvokeBCP {
 			System.out.println(res.getMessage());
 			System.out.println(res.getTransactionID());
 		}
-		System.out.println(responses.iterator().next().getProposalResponse().getResponse().getPayload().toStringUtf8());		 
+		CompletableFuture<TransactionEvent> cf = channel.sendTransaction(responses);
+		//System.out.println(responses.iterator().next().getProposalResponse().getResponse().getPayload().toStringUtf8());		 
 		return null;		
 	}
 	public static void main(String[] args) throws Exception{
-		InvokeBCP m = new InvokeBCP();
-		String[] invokeArgs= { "htl","50" };
-		String cc = "go_package2";
-		String fcnName = "set";
-		m.invoke(cc,fcnName,invokeArgs);
+		InvokeBCP invoke = new InvokeBCP();
+		QueryBCP query = new QueryBCP();
+		String[] invokeArgs= { "00002", "Milk", "10", "u", "SS"};
+		String cc = "go_package8";
+		String fcnName = "initUnprofitablesupply";
+		invoke.invoke(cc,fcnName,invokeArgs);
+		
+		cc = "go_package8";
+		invokeArgs= new String[]{ "milk"};
+		fcnName = "queryUnproByName";
+		query.query(cc,fcnName,invokeArgs);
+		
+//		cc = "go_package5";
+//		System.out.println("2222");
+//		invokeArgs= new String[]{ "00002","milk","50","u","SS","5" };
+//		fcnName = "initProfitablesupply";
+//		m.query(cc,fcnName,invokeArgs);
+//		System.out.println("3333");
+//		invokeArgs= new String[]{ "00003","milk","50","u","SS"};
+//		cc = "go_package5";
+//		fcnName = "initUnprofitablesupply";
+//		m.query(cc,fcnName,invokeArgs);
+//		System.out.println("4444");
+//		invokeArgs= new String[]{ "milk"};
+//		System.out.println("5555");
+//		fcnName = "queryProByName";
+//		m.query(cc,fcnName,invokeArgs);
+//		System.out.println("6666");
+//		invokeArgs= new String[]{ "SS"};
+//
+//		fcnName = "queryUnproByOrganization";
+//		m.query(cc,fcnName,invokeArgs);
 	}
 }
