@@ -4,27 +4,24 @@ public class Supply implements Comparable<Supply>, Cloneable {
 	private String name;
 	private double amount;
 	private String unit;
-	private Organization provider;
+	private int providerId;
 
 	public Supply() {
 	};
 
-	public Supply(int supplyId, String name, double amount, String unit, Organization provider) {
+	public Supply(int supplyId, String name, double amount, String unit, int providerId) {
 		super();
 		this.supplyId = supplyId;
 		this.name = name;
 		this.amount = amount;
 		this.unit = unit;
-		this.provider = provider;
+		this.providerId = providerId;
 	}
 
-	
-
-
 	public int compareTo(Supply other) {
-		if (this.provider.getRank() > other.provider.getRank()) {
+		if (Organization.getRankById(this.providerId) > Organization.getRankById(other.providerId)) {
 			return -1; 
-		} else if (this.provider.getRank() < other.provider.getRank()) {
+		} else if (Organization.getRankById(this.providerId) <Organization.getRankById(other.providerId)) {
 			return 1;
 		} else {
 			if (this.getAmount() > other.getAmount()) {
@@ -34,6 +31,18 @@ public class Supply implements Comparable<Supply>, Cloneable {
 			}
 			return 0;
 		}
+	}
+
+	public int getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(int providerId) {
+		this.providerId = providerId;
+	}
+
+	public void setSupplyId(int supplyId) {
+		this.supplyId = supplyId;
 	}
 
 	@Override
@@ -50,7 +59,7 @@ public class Supply implements Comparable<Supply>, Cloneable {
 	@Override
 	public String toString() {
 		return "Supply [supplyId=" + supplyId + ", name=" + name + ", amount=" + amount + 
-				", with provider rank" + provider.getRank() + "]";
+				", with provider rank" + Organization.getRankById(this.providerId) + "]";
 	}
 
 	public int getSupplyId() {
@@ -85,11 +94,4 @@ public class Supply implements Comparable<Supply>, Cloneable {
 		this.unit = unit;
 	}
 
-	public Organization getProvider() {
-		return provider;
-	}
-
-	public void setProvider(Organization provider) {
-		this.provider = provider;
-	}
 }

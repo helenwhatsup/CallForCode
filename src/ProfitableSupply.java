@@ -3,8 +3,8 @@ public class ProfitableSupply extends Supply{
 	private int amount; // There is no fund in the profitable supply pool, so the amount should be an integer.
 	private double unitPrice;
 
-	public ProfitableSupply(int supplyId, String name, int amount, String unit, double unitPrice, Organization provider) {
-		super(supplyId, name, amount, unit, provider);
+	public ProfitableSupply(int supplyId, String name, int amount, String unit, double unitPrice, int providerId) {
+		super(supplyId, name, amount, unit, providerId);
 		this.unitPrice = unitPrice;
 	}
 	
@@ -19,9 +19,9 @@ public class ProfitableSupply extends Supply{
 	
 	@Override
 	public int compareTo(Supply other) {
-		if (this.getProvider().getRank() > other.getProvider().getRank()) { 
-			return -1;
-		} else if (this.getProvider().getRank() < other.getProvider().getRank()) {
+		if (Organization.getRankById(this.getProviderId()) > Organization.getRankById(other.getProviderId())) {
+			return -1; 
+		} else if (Organization.getRankById(this.getProviderId()) <Organization.getRankById(other.getProviderId())) {
 			return 1;
 		} else { 
 			if (this.getUnitPrice() < ((ProfitableSupply) other).getUnitPrice()) {
@@ -43,7 +43,7 @@ public class ProfitableSupply extends Supply{
 	public String toString() {		
 		return "ProfitableSupply [supplyId=" + this.getSupplyId() + ", name=" + 
 				this.getName() + ", amount=" + this.getAmount() + ", unitPrice=" + this.getUnitPrice() +
-				" with provider rank" + this.getProvider().getRank() + "]     ";
+				" with provider rank" + Organization.getRankById(this.getProviderId()) + "]";
 	}
 
 

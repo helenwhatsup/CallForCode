@@ -48,23 +48,23 @@ public class DemandTest {
 //		UnprofitableSupply f3 = new UnprofitableSupply(103, "Fund", 3000, "USD", o2);
 //		List<UnprofitableSupply> fundPool = Arrays.asList(f1, f2, f3);
 		
-		ProfitableSupply ss1 = new ProfitableSupply(1001, "Water", 1, "box", 4.3, o4);
-		ProfitableSupply ss2 = new ProfitableSupply(1002, "Water", 5, "box", 2.2, o3);
-		ProfitableSupply ss3 = new ProfitableSupply(1003, "Water", 2, "box", 6.1, o2);
-		
-		ProfitableSupply ss4 = new ProfitableSupply(1004, "Water", 3, "box", 7.5, o4);
-		//ProfitableSupply ss5 = new ProfitableSupply(105, "Water", 400, "box", 20, o3);
-		//ProfitableSupply ss6 = new ProfitableSupply(106, "Water", 5, "box", 1, o2);
-		List<ProfitableSupply> waterProList = Arrays.asList(ss1, ss2, ss4);
-		
-		UnprofitableSupply f1 = new UnprofitableSupply(101, "Fund", 50, "USD",o4);
-		UnprofitableSupply f2 = new UnprofitableSupply(102, "Fund", 60, "USD", o3);
-		UnprofitableSupply f3 = new UnprofitableSupply(103, "Fund", 30, "USD", o2);
-		List<UnprofitableSupply> fundPool = Arrays.asList(f1, f2, f3);
-		
-		DemandTest demand = new DemandTest(333, "Water", "Food", 20, "box");
-		System.out.println(demand);
-		demand.matchToSupply(Arrays.asList(), fundPool, waterProList);
+//		ProfitableSupply ss1 = new ProfitableSupply(1001, "Water", 1, "box", 4.3, o4);
+//		ProfitableSupply ss2 = new ProfitableSupply(1002, "Water", 5, "box", 2.2, o3);
+//		ProfitableSupply ss3 = new ProfitableSupply(1003, "Water", 2, "box", 6.1, o2);
+//		
+//		ProfitableSupply ss4 = new ProfitableSupply(1004, "Water", 3, "box", 7.5, o4);
+//		//ProfitableSupply ss5 = new ProfitableSupply(105, "Water", 400, "box", 20, o3);
+//		//ProfitableSupply ss6 = new ProfitableSupply(106, "Water", 5, "box", 1, o2);
+//		List<ProfitableSupply> waterProList = Arrays.asList(ss1, ss2, ss4);
+//		
+//		UnprofitableSupply f1 = new UnprofitableSupply(101, "Fund", 50, "USD", 402);
+//		UnprofitableSupply f2 = new UnprofitableSupply(102, "Fund", 60, "USD", o3);
+//		UnprofitableSupply f3 = new UnprofitableSupply(103, "Fund", 30, "USD", o2);
+//		List<UnprofitableSupply> fundPool = Arrays.asList(f1, f2, f3);
+//		
+//		DemandTest demand = new DemandTest(333, "Water", "Food", 20, "box");
+//		System.out.println(demand);
+//		demand.matchToSupply(Arrays.asList(), fundPool, waterProList);
 
 	}
 	

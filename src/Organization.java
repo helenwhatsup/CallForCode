@@ -28,6 +28,12 @@ public class Organization {
 		
 	}
 	
+	public static int getRankById(int id) {
+		//use query by key
+		//extract rank form json
+		return 0;
+	}
+	
 	public void updateOrganization(int avg1, int avg2, int avg3, int avg4, int avg5) {};
 
 	public int getOrgId() {

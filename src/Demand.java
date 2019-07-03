@@ -17,6 +17,30 @@ public class Demand implements Comparable<Demand>, Serializable {
 	private static int currentDemandId = 1;
 	private static final long serialVersionUID = 20190625050327L;
 
+	public static void main(String[] args) {	
+		Organization o3 = new Organization(1, "Union", 61, 3, "profitable");
+		Organization o2 = new Organization(1, "Union", 96, 2, "profitable");
+		Organization o1 = new Organization(1, "Union", 96, 1, "profitable");
+		//demand attributes
+		int demandId = 1;
+		String name = "milk";
+		String category = "Food";
+		int amountNeeded = 50;
+		String unit = "box";
+		int priority = 1;
+		Demand d1 = new Demand(demandId, name, category, amountNeeded, unit, priority);
+		
+		//supply attributes
+		int supplyId = 301;
+		String name2 = "milk";
+		double amount2 =  30;
+		String unit2 = "box";
+		int providerId = 401;
+		UnprofitableSupply s1 = new UnprofitableSupply(supplyId, name2, amount2, unit2, providerId);
+		s1.uplinkUnprofitableSupply(supplyId, name2, amount2, unit2, providerId);
+		
+		d1.matchToSupply();
+	}
 	/*
 	 * The map that matches a category to its corresponding priority.
 	 */
@@ -38,9 +62,9 @@ public class Demand implements Comparable<Demand>, Serializable {
 	 * @param amount
 	 * @param unit
 	 */
-	public Demand(String name, String category, int amount, String unit) {
+	public Demand(int demandId, String name, String category, int amount, String unit) {
 		super();
-		this.demandId = ++currentDemandId;
+		this.demandId = demandId;
 		this.name = name;
 		this.category = category;
 		this.amountNeeded = amount;
@@ -56,9 +80,9 @@ public class Demand implements Comparable<Demand>, Serializable {
 	 * @param unit
 	 * @param priority
 	 */
-	public Demand(String name, String category, int amount, String unit, int priority) {
+	public Demand(int demandId,String name, String category, int amount, String unit, int priority) {
 		super();
-		this.demandId = ++currentDemandId;
+		this.demandId = demandId;
 		this.name = name;
 		this.category = category;
 		this.amountNeeded = amount;

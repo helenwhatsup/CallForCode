@@ -60,13 +60,13 @@ public class SupplyManagerTest {
 //		
 ////		List<Supply> resultList4 = supplyManager.mapInProfitableSupplyPool("Water", 2000, 100, l2);
 ////		System.out.println(resultList4);
-		UnprofitableSupply f1 = new UnprofitableSupply(101, "Fund", 5000, "USD",o4);
-		UnprofitableSupply f2 = new UnprofitableSupply(102, "Fund", 6000, "USD", o3);
-		UnprofitableSupply f3 = new UnprofitableSupply(103, "Fund", 3000, "USD", o2);
-		List<UnprofitableSupply> fundPool = Arrays.asList(f1, f2, f3);
+//		UnprofitableSupply f1 = new UnprofitableSupply(101, "Fund", 5000, "USD",o4);
+//		UnprofitableSupply f2 = new UnprofitableSupply(102, "Fund", 6000, "USD", o3);
+//		UnprofitableSupply f3 = new UnprofitableSupply(103, "Fund", 3000, "USD", o2);
+//		List<UnprofitableSupply> fundPool = Arrays.asList(f1, f2, f3);
 		
-		List<Supply> resultList5 = supplyManager.mapInUnprofitableSupplyPool("Fund", 6500, fundPool);
-		System.out.println(resultList5);
+	//	List<Supply> resultList5 = supplyManager.mapInUnprofitableSupplyPool("Fund", 6500, fundPool);
+//		System.out.println(resultList5);
 	}
 	
 
@@ -143,7 +143,7 @@ public class SupplyManagerTest {
 			sum += amountUsed;
 			s.deductAmount(amountUsed);
 			//TODO update supply data after deducting certain amount
-			s.updateUnprofitableSupply();
+			//s.updateUnprofitableSupply();
 		}
 		
 		return supplyList;
