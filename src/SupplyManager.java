@@ -13,7 +13,7 @@ import main.java.org.example.cfc.QueryBCP;
 public class SupplyManager {
 	//block chain connection profile
 	private final static String chainCode = "go_package8";
-	private final static String fcnName = "queryUnproByName";
+
 	public SupplyManager() {
 		super();
 	}
@@ -31,7 +31,7 @@ public class SupplyManager {
 		String unit = null;
 		int providerId = 0;
 		try {
-			jsonStr = queryHelper.query(chainCode, fcnName, args);
+			jsonStr = queryHelper.query(chainCode, "queryUnproByName", args);
 			JSONArray jsonArr = JSONObject.parseArray(jsonStr);
 			for (int i = 0 ; i < jsonArr.size() ; i++){
 				jsonObj = jsonArr.getJSONObject(i);
