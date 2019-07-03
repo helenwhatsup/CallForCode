@@ -5,6 +5,15 @@ public class Supply implements Comparable<Supply>, Cloneable {
 	private double amount;
 	private String unit;
 	private int providerId;
+	private int providerRank;
+	
+	public int getProviderRank() {
+		return providerRank;
+	}
+
+	public void setProviderRank(int providerRank) {
+		this.providerRank = providerRank;
+	}
 
 	public Supply() {
 	};

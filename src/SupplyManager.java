@@ -13,7 +13,7 @@ import main.java.org.example.cfc.QueryBCP;
 public class SupplyManager {
 	//block chain connection profile
 	private final static String chainCode = "go_package8";
-	private final static String fcnName = "queryUnproByName";
+
 	public SupplyManager() {
 		super();
 	}
@@ -31,16 +31,16 @@ public class SupplyManager {
 		String unit = null;
 		int providerId = 0;
 		try {
-			jsonStr = queryHelper.query(chainCode, fcnName, args);
+			jsonStr = queryHelper.query(chainCode, "queryUnproByName", args);
 			JSONArray jsonArr = JSONObject.parseArray(jsonStr);
 			for (int i = 0 ; i < jsonArr.size() ; i++){
 				jsonObj = jsonArr.getJSONObject(i);
 				jsonObj = JSONObject.parseObject(jsonObj.getString("Record"));
 				supplyId = jsonObj.getIntValue("supplyID");
 				name = jsonObj.getString("name");
-				amount = jsonObj.getDoubleValue("name");
+				amount = jsonObj.getDoubleValue("amount");
 				unit = jsonObj.getString("unit");
-				providerId = jsonObj.getIntValue("providerId");
+				providerId = jsonObj.getIntValue("organization");
 				resultList.add(new UnprofitableSupply(supplyId,name,amount,unit,providerId));
 			}
 			
@@ -63,7 +63,7 @@ public class SupplyManager {
 	 * @param list
 	 * @return 
 	 */
-	public double getTotalAmount(List<Supply> list) {
+	public double getTotalAmount(List<? extends Supply> list) {
 		double total = list.stream().mapToDouble(s -> s.getAmount()).sum();
 		return total;
 	}

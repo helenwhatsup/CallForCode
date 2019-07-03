@@ -23,40 +23,43 @@ public class Demand implements Comparable<Demand>, Serializable {
 		Organization o1 = new Organization(1, "Union", 96, 1, "profitable");
 		//demand attributes
 		int demandId = 1;
-		String name = "milk";
+		String name = "bread";
 		String category = "Food";
-		int amountNeeded = 50;
+		int amountNeeded = 200;
 		String unit = "box";
 		int priority = 1;
 		Demand d1 = new Demand(demandId, name, category, amountNeeded, unit, priority);
 		
 		
 		
-		//supply attributes
-		int supplyId2 = 301;
-		String name2 = "milk";
-		double amount2 =  30;
-		String unit2 = "box";
-		int providerId2 = 401;
+//		//supply attributes
+		int supplyId2 = 701;
+		String name2 = "bread";
+		double amount2 =  100;
+		String unit2 = "kg";
+		int providerId2 = 501;
 		UnprofitableSupply s2 = new UnprofitableSupply(supplyId2, name2, amount2, unit2, providerId2);
 		
-		int supplyId3 = 302;
-		String name3 = "milk";
-		double amount3 =  10;
-		String unit3 = "box";
-		int providerId3 = 402;
-		UnprofitableSupply s3 = new UnprofitableSupply(supplyId3, name2, amount2, unit2, providerId3);
+		int supplyId3 = 702;
+		String name3 = "bread";
+		double amount3 =  200;
+		String unit3 = "kg";
+		int providerId3 = 502;
+		UnprofitableSupply s3 = new UnprofitableSupply(supplyId3, name3, amount3, unit3, providerId3);
+//		
+//		
+//		s2.uplinkUnprofitableSupply();
+//		s3.uplinkUnprofitableSupply();
+//		
+//		System.out.println("Finished uplinking unprofitable supplies");
 		
+//		s2.deductAmount(20);
+//		s2.updateUnprofitableSupply();
+//
+//		s3.deductAmount(10);
+//		s3.updateUnprofitableSupply();
+//		System.out.println("Finished updating deducted amount");
 		
-		s2.uplinkUnprofitableSupply();
-		s3.uplinkUnprofitableSupply();
-		
-		s2.deductAmount(20);
-		s2.updateUnprofitableSupply();
-		
-		
-		s3.deductAmount(10);
-		s3.updateUnprofitableSupply();
 		// query s2 to check amount
 		
 		d1.matchToSupply();
@@ -122,7 +125,9 @@ public class Demand implements Comparable<Demand>, Serializable {
 
 		double amountStillNeeded = this.amountNeeded - sum;
 		if (amountStillNeeded == 0) {
-			return;
+			System.out.println("Unprofitable supply List:\n");
+			System.out.println(unprofitableSupplyList);
+			return;		
 		}
 
 		// Calculate the price needed to pay for the available resources
@@ -147,9 +152,22 @@ public class Demand implements Comparable<Demand>, Serializable {
 		totalList.addAll(profitableSupplyList);
 		totalList.addAll(fundList);
 		
-		if (sum < this.amountNeeded) {
-			// TODO put this unmapped demand in the demand pool
-		}
+		System.out.println("Unprofitable supply List:\n");
+		System.out.println(unprofitableSupplyList);
+		
+		System.out.println("Total price in profitable supply list is: " + price);
+		System.out.println("Fund actually provided is " + fund );
+		System.out.println("\n Fund List:");
+		System.out.println(fundList);
+		
+		System.out.println("\n Profitable supply List:");
+		System.out.println(profitableSupplyList);
+		
+		System.out.println("Actually gathered amount of resources:" + sum);
+		
+//		if (sum < this.amountNeeded) {
+//			// TODO put this unmapped demand in the demand pool
+//		}
 	}
 
 	@Override

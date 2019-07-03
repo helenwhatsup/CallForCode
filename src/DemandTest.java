@@ -85,8 +85,7 @@ public class DemandTest {
 		if (amountStillNeeded == 0) {
 			System.out.println("Unprofitable supply List:\n");
 			System.out.println(unprofitableSupplyList);
-			return;
-			
+			return;		
 		}
 
 		// Calculate the price needed to pay for the available resources
@@ -95,7 +94,7 @@ public class DemandTest {
 		
 		double totalFund = supplyManager.getTotalAmount(fundPool);//***
 		// Map in the profitable supply pool with the fund.
-		double fund = price < supplyManager.getTotalAmount(fundPool) ? price : supplyManager.getTotalAmount(fundPool);
+		double fund = price < totalFund ? price : totalFund;
 		List<Supply> profitableSupplyList = supplyManager.mapInProfitableSupplyPool(
 				this.getName(), (int) amountStillNeeded, fund, waterProList);
 		sum += supplyManager.getTotalAmount(profitableSupplyList);
