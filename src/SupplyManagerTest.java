@@ -14,59 +14,55 @@ public class SupplyManagerTest {
 	public static void main(String[] args) {
 		SupplyManagerTest supplyManager = new SupplyManagerTest();
 		
-		Organization o3 = new Organization(1, "Union", 61, 3, "Profitable");
-		Organization o2 = new Organization(1, "Union", 96, 2, "Profitable");
-		Organization o1 = new Organization(1, "Union", 96, 1, "Profitable");
-		Organization o4 = new Organization(1, "Union", 96, 4, "Profitable");
+		Organization o3 = new Organization(1, "Union", 61, 3);
+		Organization o2 = new Organization(1, "Union", 96, 2);
+		Organization o1 = new Organization(1, "Union", 96, 1);
+		Organization o4 = new Organization(1, "Union", 96, 4);
 		
-//		//List<Supply> mapInUnprofitableSupplyPool(String resourceName, double amountNeeded, 
-//		// List<UnprofitableSupply> unprofitableSupplyPool) {
-//		// Supply(int supplyId, String name, int amount, String unit, Organization provider);
-//		UnprofitableSupply s1 = new UnprofitableSupply(101, "Water", 100, "box",o4);
-//		UnprofitableSupply s2 = new UnprofitableSupply(102, "Water", 50, "box", o3);
-//		UnprofitableSupply s3 = new UnprofitableSupply(103, "Water", 200, "box", o2);
-//		
-//		UnprofitableSupply s4 = new UnprofitableSupply(104, "Water", 300, "box",o4);
-//		UnprofitableSupply s5 = new UnprofitableSupply(105, "Water", 400, "box", o3);
-//		UnprofitableSupply s6 = new UnprofitableSupply(106, "Water", 500, "box", o2);
-//		
-//		
-//		// PROFITABLE
-//		ProfitableSupply ss1 = new ProfitableSupply(101, "Water", 100, "box", 4, o4);
-//		ProfitableSupply ss2 = new ProfitableSupply(102, "Water", 50, "box", 2, o3);
-//		ProfitableSupply ss3 = new ProfitableSupply(103, "Water", 200, "box", 6, o2);
-//		
-//		ProfitableSupply ss4 = new ProfitableSupply(104, "Water", 300, "box", 20, o4);
-//		ProfitableSupply ss5 = new ProfitableSupply(105, "Water", 400, "box", 20, o3);
-//		ProfitableSupply ss6 = new ProfitableSupply(106, "Water", 500, "box", 1, o2);
-//		
-//		// test unprofitable
-////		List<Supply> resultList1 = supplyManager.mapInUnprofitableSupplyPool("Water", 300, Arrays.asList(s3, s2, s1));
-////		System.out.println(resultList1);
-//		
-////		//test unprofitable
-////		List<UnprofitableSupply> l1 = Arrays.asList(s3, s2, s1, s5, s4, s6);
-////		List<Supply> resultList2 = supplyManager.mapInUnprofitableSupplyPool("Water", 2000, l1);
-////		System.out.println(resultList2);
-////		System.out.println("\n");
-//		
-//		List<ProfitableSupply> l2 = Arrays.asList(ss3, ss2, ss1, ss5, ss4, ss6);
-//		double price = supplyManager.calculatePriceInProfitableSupplyPool("Water", 5000, l2);
-//		System.out.println(price);
+		//List<Supply> mapInUnprofitableSupplyPool(String resourceName, double amountNeeded, 
+		// List<UnprofitableSupply> unprofitableSupplyPool) {
+		// Supply(int supplyId, String name, int amount, String unit, Organization provider);
+		UnprofitableSupply s1 = new UnprofitableSupply(101, "Water", 100, "box",o4);
+		UnprofitableSupply s2 = new UnprofitableSupply(102, "Water", 50, "box", o3);
+		UnprofitableSupply s3 = new UnprofitableSupply(103, "Water", 200, "box", o2);
+		
+		UnprofitableSupply s4 = new UnprofitableSupply(104, "Water", 300, "box",o4);
+		UnprofitableSupply s5 = new UnprofitableSupply(105, "Water", 400, "box", o3);
+		UnprofitableSupply s6 = new UnprofitableSupply(106, "Water", 500, "box", o2);
+		
+		
+		// PROFITABLE
+		ProfitableSupply ss1 = new ProfitableSupply(101, "Water", 100, "box", 4, o4);
+		ProfitableSupply ss2 = new ProfitableSupply(102, "Water", 50, "box", 2, o3);
+		ProfitableSupply ss3 = new ProfitableSupply(103, "Water", 200, "box", 6, o2);
+		
+		ProfitableSupply ss4 = new ProfitableSupply(104, "Water", 300, "box", 20, o4);
+		ProfitableSupply ss5 = new ProfitableSupply(105, "Water", 400, "box", 20, o3);
+		ProfitableSupply ss6 = new ProfitableSupply(106, "Water", 500, "box", 1, o2);
+		
+		// test unprofitable
+//		List<Supply> resultList1 = supplyManager.mapInUnprofitableSupplyPool("Water", 300, Arrays.asList(s3, s2, s1));
+//		System.out.println(resultList1);
+		
+//		//test unprofitable
+//		List<UnprofitableSupply> l1 = Arrays.asList(s3, s2, s1, s5, s4, s6);
+//		List<Supply> resultList2 = supplyManager.mapInUnprofitableSupplyPool("Water", 2000, l1);
+//		System.out.println(resultList2);
 //		System.out.println("\n");
-//		
-//		List<Supply> resultList3 = supplyManager.mapInProfitableSupplyPool("Water", 5000, 100, l2);
-//		System.out.println(resultList3);
-//		
-////		List<Supply> resultList4 = supplyManager.mapInProfitableSupplyPool("Water", 2000, 100, l2);
-////		System.out.println(resultList4);
-//		UnprofitableSupply f1 = new UnprofitableSupply(101, "Fund", 5000, "USD",o4);
-//		UnprofitableSupply f2 = new UnprofitableSupply(102, "Fund", 6000, "USD", o3);
-//		UnprofitableSupply f3 = new UnprofitableSupply(103, "Fund", 3000, "USD", o2);
-//		List<UnprofitableSupply> fundPool = Arrays.asList(f1, f2, f3);
+
+		List<ProfitableSupply> l2 = Arrays.asList(ss3, ss2, ss1, ss5, ss4, ss6);
+		double price = supplyManager.calculatePriceInProfitableSupplyPool("Water", 2000, l2);
+		System.out.println(price);
+		System.out.println("\n");
 		
-	//	List<Supply> resultList5 = supplyManager.mapInUnprofitableSupplyPool("Fund", 6500, fundPool);
-//		System.out.println(resultList5);
+		List<Supply> resultList3 = supplyManager.mapInProfitableSupplyPool("Water", 2000, 18000, l2);
+		System.out.println(resultList3);
+		
+//		List<Supply> resultList4 = supplyManager.mapInProfitableSupplyPool("Water", 2000, 100, l2);
+//		System.out.println(resultList4);
+		
+		
+
 	}
 	
 
@@ -87,15 +83,10 @@ public class SupplyManagerTest {
 	 * @param list
 	 * @return 
 	 */
-	public double getTotalAmount(List<? extends Supply> list) {
+	public double getTotalAmount(List<Supply> list) {
 		double total = list.stream().mapToDouble(s -> s.getAmount()).sum();
 		return total;
 	}
-	
-//	public double getTotalAmount(List<UnprofitableSupply> list) {
-//		double total = list.stream().mapToDouble(s -> s.getAmount()).sum();
-//		return total;
-//	}
 	
 	public double getTotalPrice(List<Supply> profitableSupplyList) {
 		double totalPrice = 0;
@@ -136,7 +127,6 @@ public class SupplyManagerTest {
 			
 			// Add supply to be used to the supply list
 			UnprofitableSupply sCopy = (UnprofitableSupply) s.clone();
-			sCopy.setAmount(amountUsed);
 			supplyList.add(sCopy);
 			
 			// Update info

@@ -1,12 +1,19 @@
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
+
+import main.java.org.example.cfc.QueryBCP;
+
 public class Organization {
 	private int orgId;
 	private String name;
 	private int score; // range from 0 to 100
 	private int rank;
 	private String orgType;
-
+	//block chain connection profile
+	private final static String chainCode = "go_package8";
+	private final static String fcnName = "queryByKey";
+	
 	public Organization(int orgId, String name, int score, int rank, String orgType) {
 		super();
 		this.orgId = orgId;
@@ -29,9 +36,19 @@ public class Organization {
 	}
 	
 	public static int getRankById(int id) {
-		//use query by key
-		//extract rank form json
-		return 0;
+		QueryBCP query = new QueryBCP();
+		String[] queryArgs = new String[]{Integer.toString(id)};
+		int rank = -1;
+		try {
+			String jsonStr = query.query(chainCode,fcnName,queryArgs);
+			JSONObject json = JSONObject.parseObject(jsonStr);
+			System.out.println("id: "+ id + "rank: " + json.getString("rank"));
+			rank = Integer.parseInt(json.getString("rank"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rank;
 	}
 	
 	public void updateOrganization(int avg1, int avg2, int avg3, int avg4, int avg5) {};
@@ -67,5 +84,7 @@ public class Organization {
 	public void setRank(int rank) {
 		this.rank = rank;
 	}
-
+public static void main(String args[]){
+	getRankById(401);
+}
 }

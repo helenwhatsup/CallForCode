@@ -1,7 +1,11 @@
 package main.java.org.example.cfc;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Properties;
 
 import org.hyperledger.fabric.sdk.ChaincodeID;
@@ -83,14 +87,27 @@ public class QueryBCP {
 		// Query the chaincode  
 		Collection<ProposalResponse> queryResponse = channel.queryByChaincode(queryRequest);
 		String resultStr = queryResponse.iterator().next().getProposalResponse().getResponse().getPayload().toStringUtf8();
-		System.out.println(resultStr);
+		//												   getProposalResponse().getResponse().getPayload().toStringUtf8();
+		System.out.println("aaaa "+resultStr);
+
+//		for (ProposalResponse proposalResponse : queryResponse) {
+//            if (!proposalResponse.isVerified() || proposalResponse.getStatus() != ProposalResponse.Status.SUCCESS) {
+//                fail("Failed query proposal from peer " + proposalResponse.getPeer().getName() + " status: " + proposalResponse.getStatus() +
+//                        ". Messages: " + proposalResponse.getMessage()
+//                        + ". Was verified : " + proposalResponse.isVerified());
+//            } else {
+//                String payload = proposalResponse.getProposalResponse().getResponse().getPayload().toStringUtf8();
+//                System.out.printf("Query payload of b from peer %s returned %s", proposalResponse.getPeer().getName(), payload);
+//
+//            }
+//        }		
 		return resultStr;		
 	}
 	
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		QueryBCP m = new QueryBCP();
-		String[] queryArgs= { "htl" };
+		String[] queryArgs= { "zxc" };
 		String cc = "go_package2";
 		String fcnName = "query";
 		m.query(cc,fcnName,queryArgs);

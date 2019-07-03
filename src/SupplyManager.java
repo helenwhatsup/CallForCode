@@ -27,8 +27,7 @@ public class SupplyManager {
 	 * @param list
 	 * @return 
 	 */
-	public double getTotalAmount(List<? extends Supply> list) {
-		//TODO verify the type of parameter is suitable.
+	public double getTotalAmount(List<Supply> list) {
 		double total = list.stream().mapToDouble(s -> s.getAmount()).sum();
 		return total;
 	}
@@ -72,7 +71,6 @@ public class SupplyManager {
 			
 			// Add supply to be used to the supply list
 			UnprofitableSupply sCopy = (UnprofitableSupply) s.clone();
-			sCopy.setAmount(amountUsed);
 			supplyList.add(sCopy);
 			
 			// Update info
@@ -159,3 +157,4 @@ public class SupplyManager {
 		return supplyList;
 	}
 }
+
