@@ -5,19 +5,12 @@ public class UnprofitableSupply extends Supply {
 		super(supplyId, name, amount, unit, provider);
 	}
 
+    public void uplinkUnprofitableSupply() {
+		
+	}
+	
+	// TODO Implement the update supply method
+	public void updateUnprofitableSupply() {
 
-//	public int compareTo(Supply other) {
-//		if (this.getProvider().getRank() > other.getProvider().getRank()) {
-//			return 1;
-//		} else if (this.getProvider().getRank() < other.getProvider().getRank()) {
-//			return -1;
-//		} else {
-//			if (this.getAmount() > other.getAmount()) {
-//				return 1;
-//			} else if (this.getAmount() < other.getAmount()) {
-//				return -1;
-//			}
-//			return 0;
-//		}
-//	}
+	}
 }

@@ -79,7 +79,7 @@ public class SupplyManager {
 			sum += amountUsed;
 			s.deductAmount(amountUsed);
 			//TODO update supply data after deducting certain amount
-			s.updateSupply();
+			s.updateUnprofitableSupply();
 		}
 		
 		return supplyList;
@@ -153,7 +153,7 @@ public class SupplyManager {
 			sum += amountUsed;
 			fundLeft -= amountUsed * s.getUnitPrice();
 			s.deductAmount(amountUsed);
-			s.updateSupply();
+			s.updateProfitableSupply();
 		}
 		
 		return supplyList;

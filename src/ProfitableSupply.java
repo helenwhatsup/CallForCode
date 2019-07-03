@@ -8,6 +8,15 @@ public class ProfitableSupply extends Supply{
 		this.unitPrice = unitPrice;
 	}
 	
+	public void uplinkProfitableSupply() {
+		
+	}
+	
+	// TODO Implement the update supply method
+	public void updateProfitableSupply() {
+
+	}
+	
 	@Override
 	public int compareTo(Supply other) {
 		if (this.getProvider().getRank() > other.getProvider().getRank()) { 
@@ -45,21 +54,5 @@ public class ProfitableSupply extends Supply{
 	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
-	
-//	public int compareTo(ProfitableSupply other) {
-//		if (this.getProvider().getRank() > other.getProvider().getRank()) {
-//			return -1;
-//		} else if (this.getProvider().getRank() < other.getProvider().getRank()) {
-//			return 1;
-//		} else {
-//			if ((this.getAmount() / this.getUnitPrice()) > (other.getAmount() / other.getUnitPrice())) {
-//				return -1;
-//			} else if ((this.getAmount() / this.getUnitPrice()) < (other.getAmount() / other.getUnitPrice())) {
-//				return +1;
-//			}
-//		}
-//		return 0;
-//	}
-	
 	
 }

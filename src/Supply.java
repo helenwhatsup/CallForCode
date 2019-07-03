@@ -20,11 +20,6 @@ public class Supply implements Comparable<Supply>, Cloneable {
 
 	
 
-	// TODO Implement the update supply method
-	public void updateSupply() {
-
-	}
-
 
 	public int compareTo(Supply other) {
 		if (this.provider.getRank() > other.provider.getRank()) {
