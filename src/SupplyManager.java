@@ -2,18 +2,54 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+import main.java.org.example.cfc.QueryBCP;
+
 /*
  * Work for the subclasses.
  */
 public class SupplyManager {
+	//block chain connection profile
+	private final static String chainCode = "go_package8";
+	private final static String fcnName = "queryUnproByName";
 	public SupplyManager() {
 		super();
 	}
 
 	// TODO get the corresponding list of supplies
 	public static List<UnprofitableSupply> getUnprofitableSupplyList(String ResourceName) {
-
-		return null;
+		QueryBCP queryHelper =new QueryBCP();
+		String[] args =new String[]{ResourceName};
+		String jsonStr;
+		List<UnprofitableSupply> resultList = new ArrayList<UnprofitableSupply>();
+		JSONObject jsonObj = null;
+		int supplyId = 0;
+		String name = null;
+		double amount = 0;
+		String unit = null;
+		int providerId = 0;
+		try {
+			jsonStr = queryHelper.query(chainCode, fcnName, args);
+			JSONArray jsonArr = JSONObject.parseArray(jsonStr);
+			for (int i = 0 ; i < jsonArr.size() ; i++){
+				jsonObj = jsonArr.getJSONObject(i);
+				jsonObj = JSONObject.parseObject(jsonObj.getString("Record"));
+				supplyId = jsonObj.getIntValue("supplyID");
+				name = jsonObj.getString("name");
+				amount = jsonObj.getDoubleValue("name");
+				unit = jsonObj.getString("unit");
+				providerId = jsonObj.getIntValue("providerId");
+				resultList.add(new UnprofitableSupply(supplyId,name,amount,unit,providerId));
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return resultList;
 	}
 
 	// TODO get the corresponding list of supplies
@@ -155,6 +191,9 @@ public class SupplyManager {
 		}
 		
 		return supplyList;
+	}
+	public static void main(String[] args) throws Exception{
+		getUnprofitableSupplyList("milk");
 	}
 }
 
