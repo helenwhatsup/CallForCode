@@ -7,7 +7,7 @@ public class UnprofitableSupply extends Supply {
 
 	
 	public UnprofitableSupply(int supplyId, String name, double amount, String unit, int providerID, int providerRank) {
-		super(supplyId, name, amount, unit, providerID);
+		super(supplyId, name, amount, unit, providerID, providerRank);
 	}
 
     public void uplinkUnprofitableSupply() {

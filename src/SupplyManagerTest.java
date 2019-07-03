@@ -50,7 +50,7 @@ public class SupplyManagerTest {
 //		System.out.println(resultList2);
 //		System.out.println("\n");
 
-		List<ProfitableSupply> l2 = Arrays.asList(ss3, ss2, ss1, ss5, ss4, ss6);
+//		List<ProfitableSupply> l2 = Arrays.asList(ss3, ss2, ss1, ss5, ss4, ss6);
 		double price = supplyManager.calculatePriceInProfitableSupplyPool("Water", 2000, l2);
 		System.out.println(price);
 		System.out.println("\n");

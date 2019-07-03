@@ -25,8 +25,8 @@ public class Demand implements Comparable<Demand>, Serializable {
 		int demandId = 1;
 		String name = "bread";
 		String category = "Food";
-		int amountNeeded = 200;
-		String unit = "box";
+		int amountNeeded = 850;
+		String unit = "kg";
 		int priority = 1;
 		Demand d1 = new Demand(demandId, name, category, amountNeeded, unit, priority);
 		
@@ -38,14 +38,14 @@ public class Demand implements Comparable<Demand>, Serializable {
 		double amount2 =  100;
 		String unit2 = "kg";
 		int providerId2 = 501;
-		UnprofitableSupply s2 = new UnprofitableSupply(supplyId2, name2, amount2, unit2, providerId2);
+		UnprofitableSupply s2 = new UnprofitableSupply(supplyId2, name2, amount2, unit2, providerId2, 4);
 		
 		int supplyId3 = 702;
 		String name3 = "bread";
 		double amount3 =  200;
 		String unit3 = "kg";
 		int providerId3 = 502;
-		UnprofitableSupply s3 = new UnprofitableSupply(supplyId3, name3, amount3, unit3, providerId3);
+		UnprofitableSupply s3 = new UnprofitableSupply(supplyId3, name3, amount3, unit3, providerId3, 4);
 //		
 //		
 //		s2.uplinkUnprofitableSupply();
@@ -61,6 +61,11 @@ public class Demand implements Comparable<Demand>, Serializable {
 //		System.out.println("Finished updating deducted amount");
 		
 		// query s2 to check amount
+		s2.setAmount(100);
+		s2.updateUnprofitableSupply();
+		
+		s3.setAmount(200);
+		s3.updateUnprofitableSupply();
 		
 		d1.matchToSupply();
 	}
@@ -124,7 +129,7 @@ public class Demand implements Comparable<Demand>, Serializable {
 		double sum = supplyManager.getTotalAmount(unprofitableSupplyList);
 
 		double amountStillNeeded = this.amountNeeded - sum;
-		if (amountStillNeeded == 0) {
+		if (amountStillNeeded <= 0) {
 			System.out.println("Unprofitable supply List:\n");
 			System.out.println(unprofitableSupplyList);
 			return;		

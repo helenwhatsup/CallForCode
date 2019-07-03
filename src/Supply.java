@@ -18,19 +18,20 @@ public class Supply implements Comparable<Supply>, Cloneable {
 	public Supply() {
 	};
 
-	public Supply(int supplyId, String name, double amount, String unit, int providerId) {
+	public Supply(int supplyId, String name, double amount, String unit, int providerId, int providerRank) {
 		super();
 		this.supplyId = supplyId;
 		this.name = name;
 		this.amount = amount;
 		this.unit = unit;
 		this.providerId = providerId;
+		this.providerRank = providerRank;
 	}
 
 	public int compareTo(Supply other) {
-		if (Organization.getRankById(this.providerId) > Organization.getRankById(other.providerId)) {
+		if (this.getProviderRank() > other.getProviderRank()) {
 			return -1; 
-		} else if (Organization.getRankById(this.providerId) <Organization.getRankById(other.providerId)) {
+		} else if (this.getProviderRank() < other.getProviderRank()) {
 			return 1;
 		} else {
 			if (this.getAmount() > other.getAmount()) {

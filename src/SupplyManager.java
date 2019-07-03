@@ -56,8 +56,40 @@ public class SupplyManager {
 
 	// TODO get the corresponding list of supplies
 	public List<ProfitableSupply> getProfitableSupplyList(String ResourceName) {
-
-		return null;
+		QueryBCP queryHelper =new QueryBCP();
+		String[] args =new String[]{ResourceName};
+		String jsonStr;
+		List<ProfitableSupply> resultList = new ArrayList<ProfitableSupply>();
+		JSONObject jsonObj = null;
+		int supplyId = 0;
+		String name = null;
+		int amount = 0;
+		String unit = null;
+		int providerId = 0;
+		double unitPrice = 0;
+		int providerRank = 0;
+		try {
+			jsonStr = queryHelper.query(chainCode, "queryUnproByName", args);
+			JSONArray jsonArr = JSONObject.parseArray(jsonStr);
+			for (int i = 0 ; i < jsonArr.size() ; i++){
+				jsonObj = jsonArr.getJSONObject(i);
+				jsonObj = JSONObject.parseObject(jsonObj.getString("Record"));
+				supplyId = jsonObj.getIntValue("supplyID");
+				name = jsonObj.getString("name");
+				amount = jsonObj.getIntValue("amount");
+				unit = jsonObj.getString("unit");
+				providerId = jsonObj.getIntValue("organization");
+				unitPrice = jsonObj.getDoubleValue("unitPrice");
+				providerRank = Organization.getRankById(providerId);
+				resultList.add(new ProfitableSupply(supplyId,name,amount,unit,providerId,unitPrice,providerRank));
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return resultList;
 	}
 
 	/**
@@ -109,13 +141,15 @@ public class SupplyManager {
 			
 			// Add supply to be used to the supply list
 			UnprofitableSupply sCopy = (UnprofitableSupply) s.clone();
+			sCopy.setAmount(amountUsed);
 			supplyList.add(sCopy);
 			
 			// Update info
 			sum += amountUsed;
 			s.deductAmount(amountUsed);
-			//TODO update supply data after deducting certain amount
 			s.updateUnprofitableSupply();
+			
+			System.out.println(String.format("%s provided %f amount", s.getProviderId(), amountUsed));
 		}
 		
 		return supplyList;
